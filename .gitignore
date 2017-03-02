@@ -63,4 +63,4 @@ typings/
 /.tscache/
 .baseDir.js
 .tscache/
-app.js
+!/app.js

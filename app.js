@@ -25,3 +25,5 @@ class Server {
         });
     }
 }
+var server = Server.bootstrap();
+module.exports = server.app;
