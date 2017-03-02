@@ -6,6 +6,8 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as path from "path";
 
+import * as indexRoute from "./routes/index";
+
 /**
  * The server.
  * @class Server
@@ -23,6 +25,9 @@ class Server {
 
     //configure application
     this.config();
+
+    //configure routes
+    this.routes();
   }
 
   private config() {
@@ -49,6 +54,21 @@ class Server {
       err.status = 404;
       next(err);
     });
+  }
+
+  private routes() {
+    // get router
+    let router: express.Router;
+    router = express.Router();
+
+    // create routes
+    var index: indexRoute.Index = new indexRoute.Index();
+
+    //home page
+    router.get("/", index.index.bind(index.index));
+
+    // use router middleware
+    this.app.use(router);
   }
 }
 
