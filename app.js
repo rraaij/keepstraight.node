@@ -16,6 +16,12 @@ class Server {
     config() {
         this.app.set("views", path.join(__dirname, "views"));
         this.app.set("view engine", "jade");
+        this.app.use(function (req, res, next) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+            res.header("Access-Control-Allow-Headers", "Content-Type");
+            next();
+        });
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(express.static(path.join(__dirname, "public")));
@@ -31,6 +37,10 @@ class Server {
         router = express.Router();
         var index = new indexRoute.Index();
         router.get("/", index.index.bind(index.index));
+        router.post("/send", (req, res, next) => {
+            console.log(`>>> Received: user: ${req.body.username} | pwd: ${req.body.password}`);
+            res.send(`POST: user: ${req.body.username} | pwd: ${req.body.password}`);
+        });
         this.app.use(router);
     }
 }
