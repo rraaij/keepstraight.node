@@ -48,6 +48,14 @@ class Server {
     //mount logger
     //this.app.use(logger("dev"));
 
+    // CORS
+    this.app.use(function(req: express.Request, res: express.Response, next: express.NextFunction) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+      res.header("Access-Control-Allow-Headers", "Content-Type");
+      next();
+    });
+
     this.app.use((request, response, next) => {
       console.log(request.headers);
       next();
@@ -84,6 +92,11 @@ class Server {
     //home page
     router.get("/", index.index.bind(index.index));
     router.get("/calc", calc.calc.bind(calc.calc));
+
+    router.post("/send", (req: express.Request, res: express.Response, next: express.NextFunction) => {
+      console.log(`>>> Received: user: ${req.body.username} | pwd: ${req.body.password}`);
+      res.send(`POST: user: ${req.body.username} | pwd: ${req.body.password}`);
+    });
 
     // use router middleware
     this.app.use(router);
