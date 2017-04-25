@@ -1,15 +1,22 @@
 /// <reference path="../_all.d.ts" />
 "use strict";
 
-import * as express from "express";
+import { Request, Response, NextFunction } from "express";
 
 module Route {
 
   export class Index {
 
-    public index(req: express.Request, res: express.Response, next: express.NextFunction) {
+    public index(req: Request, res: Response, next: NextFunction) {
       //render page
       res.render("index");
+    }
+  }
+
+  export class Calc {
+
+    public calc(req: Request, res: Response, next: NextFunction) {
+      res.render("calc");
     }
   }
 }

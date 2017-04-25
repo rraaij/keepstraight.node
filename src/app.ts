@@ -5,11 +5,12 @@
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as path from "path";
-
+import * as exphbs from "express-handlebars";
 import * as indexRoute from "./routes/index";
 
 /**
  * The server.
+ * This will be invoked every time a request hits the server.
  * @class Server
  */
 class Server {
@@ -32,11 +33,25 @@ class Server {
 
   private config() {
     //configure jade
-    this.app.set("views", path.join(__dirname, "views"));
-    this.app.set("view engine", "jade");
+    // this.app.set("views", path.join(__dirname, "views"));
+    // this.app.set("view engine", "jade");
+
+    //configure handlebars
+    this.app.engine('.hbs', exphbs({
+      defaultLayout: 'main',
+      extname: '.hbs',
+      layoutsDir: path.join(__dirname, 'views/layouts')
+    }));
+    this.app.set('view engine', '.hbs');
+    this.app.set('views', path.join(__dirname, 'views'));
 
     //mount logger
     //this.app.use(logger("dev"));
+
+    this.app.use((request, response, next) => {
+      console.log(request.headers);
+      next();
+    });
 
     //mount json form parser
     this.app.use(bodyParser.json());
@@ -51,6 +66,7 @@ class Server {
     // catch 404 and forward to error handler
     this.app.use(function(err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
       var error = new Error("Not Found");
+      console.log(`!! > ERROR:${error} | obj: ${err}`);
       err.status = 404;
       next(err);
     });
@@ -63,9 +79,11 @@ class Server {
 
     // create routes
     var index: indexRoute.Index = new indexRoute.Index();
+    var calc: indexRoute.Calc = new indexRoute.Calc();
 
     //home page
     router.get("/", index.index.bind(index.index));
+    router.get("/calc", calc.calc.bind(calc.calc));
 
     // use router middleware
     this.app.use(router);

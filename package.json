@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "grunt": "grunt",
+    "grunt:watch": "grunt --watch",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -15,12 +16,13 @@
     "debug": "~2.6.0",
     "ejs": "~2.5.5",
     "express": "~4.14.1",
+    "express-handlebars": "^3.0.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-ts": "^6.0.0-beta.11",
     "grunt-tslint": "^4.0.1",
-    "jade": "^1.11.0",
+    "handlebars": "^4.0.6",
     "morgan": "~1.7.0",
     "node-sass-middleware": "0.9.8",
     "path": "^0.12.7",
