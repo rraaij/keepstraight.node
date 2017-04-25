@@ -1,5 +1,7 @@
 # keepstraight.node
-NodeJS app for the Keepstraight App, deployed in Heroku
+NodeJS app for the Keepstraight App
+built on Angular Universal, based on https://github.com/angular/universal-starter
+deployed in Heroku
 
 
 # install typings

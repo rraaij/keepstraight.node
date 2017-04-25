@@ -63,5 +63,4 @@ typings/
 /.tscache/
 .baseDir.js
 .tscache/
-!/app.js
-/routes/
+/dist/
